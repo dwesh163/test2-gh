@@ -11,8 +11,8 @@ jobs:
             - name: Repository Dispatch / Envoi de notification
               uses: peter-evans/repository-dispatch@v3
               with:
-                  token: ${{ secrets.DISPATCH_TOKEN }}
-                  repository: your-username/target-repo-name # votre-utilisateur/nom-depot-cible
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  repository: dwesh163/test2-gh
                   event-type: upstream-release
                   client-payload: |
                       {
