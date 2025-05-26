@@ -1,0 +1,25 @@
+name: Notify Other Repo on Release / Notifier un autre dépôt lors d'une release
+
+on:
+    release:
+        types: [published]
+
+jobs:
+    notify:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Repository Dispatch / Envoi de notification
+              uses: peter-evans/repository-dispatch@v3
+              with:
+                  token: ${{ secrets.DISPATCH_TOKEN }}
+                  repository: your-username/target-repo-name # votre-utilisateur/nom-depot-cible
+                  event-type: upstream-release
+                  client-payload: |
+                      {
+                        "release": {
+                          "tag_name": "${{ github.event.release.tag_name }}",
+                          "name": "${{ github.event.release.name }}",
+                          "html_url": "${{ github.event.release.html_url }}",
+                          "repository": "${{ github.repository }}"
+                        }
+                      }
